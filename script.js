@@ -100,9 +100,11 @@ function handleFileSelect() {
         return;
     }
 
-    // Validate file size (10MB max)
-    if (file.size > 10 * 1024 * 1024) {
-        alert('File size must be less than 10MB');
+
+   // Validate file size (100MB max)
+    const maxSize = 100 * 1024 * 1024; // 100MB in bytes
+    if (file.size > maxSize) {
+        alert('File size must be less than 100MB');
         return;
     }
 
@@ -112,8 +114,7 @@ function handleFileSelect() {
 
     // Upload file
     uploadFile(file);
-}
-
+} 
 function uploadFile(file) {
     // Create a unique filename
     const timestamp = Date.now();
@@ -188,4 +189,5 @@ function resetUploadForm() {
     shareLinkContainer.style.display = 'none';
     progressFill.style.width = '0%';
     fileInput.value = '';
+
 }
