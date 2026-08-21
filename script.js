@@ -4,13 +4,23 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://w
 
 // ============= REPLACE THIS WITH YOUR FIREBASE CONFIG =============
 const firebaseConfig = {
-    apiKey: "AIzaSyDemoKeyHere",
-    authDomain: "your-project.firebaseapp.com",
-    projectId: "your-project-id",
-    storageBucket: "your-project.appspot.com",
-    messagingSenderId: "123456789",
-    appId: "1:123456789:web:abcdef123456"
+
+  apiKey: "AIzaSyBJ6-7oaP-5sFS6e7dWCRTdRbQ_9RPvYuE",
+
+  authDomain: "pdf-sharing-site.firebaseapp.com",
+
+  projectId: "pdf-sharing-site",
+
+  storageBucket: "pdf-sharing-site.firebasestorage.app",
+
+  messagingSenderId: "801715878550",
+
+  appId: "1:801715878550:web:6961b5517d0bb744bf20b7",
+
+  measurementId: "G-7TEGM13W8J"
+
 };
+
 // =================================================================
 
 // Initialize Firebase
