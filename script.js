@@ -1,16 +1,17 @@
-// Firebase Configuration - You need to replace with your own config
+// Firebase Configuration - Replace with your actual config
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
-// Your web app's Firebase configuration
+// ============= REPLACE THIS WITH YOUR FIREBASE CONFIG =============
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyDemoKeyHere",
+    authDomain: "your-project.firebaseapp.com",
+    projectId: "your-project-id",
+    storageBucket: "your-project.appspot.com",
+    messagingSenderId: "123456789",
+    appId: "1:123456789:web:abcdef123456"
 };
+// =================================================================
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -22,6 +23,7 @@ let shareableLink, viewLink;
 
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize DOM elements
     fileInput = document.getElementById('pdfFile');
     uploadArea = document.getElementById('uploadArea');
     uploadDetails = document.getElementById('uploadDetails');
@@ -100,8 +102,7 @@ function handleFileSelect() {
         return;
     }
 
-
-   // Validate file size (100MB max)
+    // Validate file size (100MB max)
     const maxSize = 100 * 1024 * 1024; // 100MB in bytes
     if (file.size > maxSize) {
         alert('File size must be less than 100MB');
@@ -114,7 +115,8 @@ function handleFileSelect() {
 
     // Upload file
     uploadFile(file);
-} 
+}
+
 function uploadFile(file) {
     // Create a unique filename
     const timestamp = Date.now();
@@ -138,7 +140,16 @@ function uploadFile(file) {
         (error) => {
             // Handle errors
             console.error('Upload error:', error);
-            alert('Upload failed. Please try again.');
+            
+            // More specific error messages
+            let errorMessage = 'Upload failed. Please try again.';
+            if (error.code === 'storage/unauthorized') {
+                errorMessage = 'Permission denied. Check Firebase Storage rules.';
+            } else if (error.code === 'storage/quota-exceeded') {
+                errorMessage = 'Storage quota exceeded. Upgrade your Firebase plan.';
+            }
+            
+            alert(errorMessage);
             resetUploadForm();
         },
         () => {
@@ -154,6 +165,10 @@ function uploadFile(file) {
                 viewLink.href = shareableURL;
                 
                 uploadStatus.textContent = 'Upload complete!';
+            }).catch((error) => {
+                console.error('Error getting download URL:', error);
+                alert('Failed to get download URL. Please try again.');
+                resetUploadForm();
             });
         }
     );
@@ -189,5 +204,4 @@ function resetUploadForm() {
     shareLinkContainer.style.display = 'none';
     progressFill.style.width = '0%';
     fileInput.value = '';
-
 }
